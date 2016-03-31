@@ -7,7 +7,7 @@ var TEXT_COLOR = "purple";
 
 // Stores the hero sprite position.
 var hero = {
-  speed: 50, // Movement speed in pixels per second.
+  speed: 100, // Movement speed in pixels per second.
   x: 0,
   y: 0
 };
@@ -35,10 +35,11 @@ function reset() {
   hero.y = height / 2;
 
   // TODO: Position the finish line somewhere random.
-  finish.x = 0;
-  finish.y = 0;
+  finish.x=Math.floor(Math.random()*width);
+  //finish.x = 0;
+  finish.y=Math.floor(Math.random()*height);
+  //finish.y = 0;
 };
-
 
 
 
@@ -49,18 +50,21 @@ function update(canvas, duration) {
   }
   if (40 in keysPressed) { // DOWN ARROW
     // TODO: Handle down arrow
+    hero.y += hero.speed * duration;
   }
   if (37 in keysPressed) { // LEFT ARROW
     // TODO: Handle left arrow
+    hero.x -= hero.speed * duration;
   }
   if (39 in keysPressed) { // RIGHT ARROW
     // TODO: Handle right arrow
+    hero.x += hero.speed * duration;
   }
 
   // TODO: Is megaman at the finish line? (modify 'false' -- DUH)
   // THINK: is the hero's (x, y) within the finish line's
   // (x, y, x + width, y + height)?
-  if (false) {
+  if (finish.x<=hero.x && finish.width+finish.x>hero.x && finish.y>=hero.y && finish.height+finish.y>hero.y) {
     wins++;
     canvas.fillText("YOU WON!", 50, 100);
     reset();
@@ -81,10 +85,12 @@ function render(canvas) {
 
   if (heroImage != null) {
     // TODO: Draw the heroImage at hero.x, hero.y.
+    canvas.drawImage(heroImage, hero.x, hero.y);
   }
 
   if (finishImage != null) {
     // TODO: Draw the finishImage at finish.x, finish.y.
+    canvas.drawImage(finishImage, finish.x, finish.y);
   }
 
   // TODO: Try a different text color or font.
